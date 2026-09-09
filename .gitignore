@@ -1,0 +1,55 @@
+﻿# Environment variables and sensitive files
+.env
+*.env
+backend/.env
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+backend/build/
+backend/dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Backend dynamic state / log files
+backend/status.json
+backend/signals.json
+backend/signal_history.json
+*.log
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+dist-electron/
+dist-ssr/
+frontend/dist/
+frontend/dist-electron/
+frontend/dist-ssr/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor & OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

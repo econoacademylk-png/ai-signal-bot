@@ -1,0 +1,54 @@
+{
+  "name": "taizercodecrafter-bot",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build:react": "vite build",
+    "build:app": "npm run build:react && electron-builder",
+    "electron:start": "electron .",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "build": {
+    "appId": "com.taizer.aibot",
+    "productName": "TaizerCodeCrafter AI BOT",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../backend/dist/main",
+        "to": "backend",
+        "filter": ["**/*"]
+      }
+    ]
+  },
+  "dependencies": {
+    "axios": "^1.16.0",
+    "lightweight-charts": "^5.2.0",
+    "lucide-react": "^1.14.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "eslint": "^10.2.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.5.0",
+    "vite": "^8.0.10"
+  }
+}
