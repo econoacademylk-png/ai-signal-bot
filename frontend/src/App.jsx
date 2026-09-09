@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Activity, TrendingUp, DollarSign, Cpu, History, Shield, ArrowUpRight, ArrowDownRight, Bell, Settings, Star, Calculator, Trash2, Download, Volume2, VolumeX } from 'lucide-react'
 import CandleChart from './components/CandleChart'
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/$/, '');
+
 // TradingView Widget Component
 const TradingViewChart = ({ symbol, timeframe }) => {
     const container = React.useRef();
@@ -214,7 +216,7 @@ function App() {
       setSignalTrends(null);
       setIsLoadingTrends(true);
       try {
-          const res = await fetch(`http://localhost:5000/api/trend_analysis?symbol=${encodeURIComponent(signal.symbol)}`);
+          const res = await fetch(`${API_BASE}/api/trend_analysis?symbol=${encodeURIComponent(signal.symbol)}`);
           if (res.ok) {
               setSignalTrends(await res.json());
           }
@@ -232,7 +234,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/status')
+        const res = await fetch(`${API_BASE}/api/status`)
         if (res.ok) {
           const data = await res.json()
           setPrice(data.price || 0)
@@ -249,13 +251,13 @@ function App() {
         }
 
         // Fetch Scanner Signals
-        const scanRes = await fetch('http://localhost:5000/api/all_signals')
+        const scanRes = await fetch(`${API_BASE}/api/all_signals`)
         if (scanRes.ok) {
             setScanSignals(await scanRes.json())
         }
 
         // Fetch Signal History
-        const histRes = await fetch('http://localhost:5000/api/signal_history')
+        const histRes = await fetch(`${API_BASE}/api/signal_history`)
         if (histRes.ok) {
             setSignalHistory(await histRes.json())
         }
@@ -272,7 +274,7 @@ function App() {
 
     const fetchSymbols = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/symbols')
+            const res = await fetch(`${API_BASE}/api/symbols`)
             if (res.ok) {
                 const data = await res.json()
                 setAllCoins(data)
@@ -282,7 +284,7 @@ function App() {
 
     const fetchSettings = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/settings')
+            const res = await fetch(`${API_BASE}/api/settings`)
             if (res.ok) {
                 const data = await res.json()
                 setSettingsForm(data)
@@ -320,7 +322,7 @@ function App() {
 
     const fetchNewCoins = async () => {
          try {
-             const res = await fetch('http://localhost:5000/api/new_coins');
+             const res = await fetch(`${API_BASE}/api/new_coins`);
              if (res.ok) {
                  const data = await res.json();
                  setNewCoins(data);
@@ -348,7 +350,7 @@ function App() {
 
   const handleGetTrade = async () => {
       try {
-          const res = await fetch('http://localhost:5000/api/add_trade', {
+          const res = await fetch(`${API_BASE}/api/add_trade`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -362,7 +364,7 @@ function App() {
           });
           if (res.ok) {
               // Fetch Signal History again to update list instantly
-              const histRes = await fetch('http://localhost:5000/api/signal_history');
+              const histRes = await fetch(`${API_BASE}/api/signal_history`);
               if (histRes.ok) {
                   setSignalHistory(await histRes.json());
               }
@@ -382,11 +384,11 @@ function App() {
           onConfirm: async () => {
               setConfirmDialog({ isOpen: false, message: '', onConfirm: null });
               try {
-                  const res = await fetch(`http://localhost:5000/api/delete_trade/${id}`, {
+                  const res = await fetch(`${API_BASE}/api/delete_trade/${id}`, {
                       method: 'DELETE'
                   });
                   if (res.ok) {
-                      const histRes = await fetch('http://localhost:5000/api/signal_history');
+                      const histRes = await fetch(`${API_BASE}/api/signal_history`);
                       if (histRes.ok) {
                           setSignalHistory(await histRes.json());
                       }
@@ -430,7 +432,7 @@ function App() {
 
   const saveSettings = async () => {
       try {
-          const res = await fetch('http://localhost:5000/api/settings', {
+          const res = await fetch(`${API_BASE}/api/settings`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(settingsForm)
@@ -445,7 +447,7 @@ function App() {
     const newState = !autoTrade;
     setAutoTrade(newState);
     try {
-        await fetch('http://localhost:5000/api/toggle_trade', {
+        await fetch(`${API_BASE}/api/toggle_trade`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ auto_trade: newState })
@@ -455,7 +457,7 @@ function App() {
 
   const updateConfig = async (coin, tf) => {
     try {
-      await fetch('http://localhost:5000/api/change_symbol', {
+      await fetch(`${API_BASE}/api/change_symbol`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ symbol: coin, timeframe: tf })
@@ -1447,7 +1449,7 @@ function App() {
                 <button 
                     onClick={async () => {
                         try {
-                            const res = await fetch('http://localhost:5000/api/trade', {
+                            const res = await fetch(`${API_BASE}/api/trade`, {
                                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ symbol: selectedCoin, side: 'BUY', amount_usdt: calc.inv })
                             });
@@ -1462,7 +1464,7 @@ function App() {
                 <button 
                     onClick={async () => {
                         try {
-                            const res = await fetch('http://localhost:5000/api/trade', {
+                            const res = await fetch(`${API_BASE}/api/trade`, {
                                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ symbol: selectedCoin, side: 'SELL', amount_usdt: calc.inv })
                             });

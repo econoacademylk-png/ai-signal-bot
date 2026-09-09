@@ -6,6 +6,7 @@
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
     "build:react": "vite build",
     "build:app": "npm run build:react && electron-builder",
     "electron:start": "electron .",
