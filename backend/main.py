@@ -1,10 +1,12 @@
+import os
 import threading
 import app
 import bot
 import time
 
 def run_flask():
-    app.app.run(port=5000, debug=False, use_reloader=False)
+    port = int(os.environ.get('PORT', 5000))
+    app.app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
 
 def run_trading_bot():
     # Small delay to ensure Flask starts first
