@@ -137,15 +137,15 @@ const DigitalClock = () => {
     const utcTime = time.toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false });
 
     return (
-        <div style={{display: 'flex', gap: '10px', background: 'rgba(255,255,255,0.05)', padding: '6px 12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', alignItems: 'center'}}>
+        <div className="digital-clock-container">
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <span style={{fontSize: '0.6rem', color: '#94a3b8', textTransform: 'uppercase'}}>Sri Lanka</span>
-                <span style={{fontSize: '1rem', fontWeight: 'bold', color: '#00ffaa', fontFamily: 'monospace', textShadow: '0 0 10px rgba(0,255,170,0.3)'}}>{sriLankaTime}</span>
+                <span style={{fontSize: '0.95rem', fontWeight: 'bold', color: '#00ffaa', fontFamily: 'monospace', textShadow: '0 0 10px rgba(0,255,170,0.3)'}}>{sriLankaTime}</span>
             </div>
-            <div style={{width: '1px', height: '24px', background: 'rgba(255,255,255,0.1)'}}></div>
+            <div style={{width: '1px', height: '22px', background: 'rgba(255,255,255,0.1)'}}></div>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <span style={{fontSize: '0.6rem', color: '#94a3b8', textTransform: 'uppercase'}}>Market UTC</span>
-                <span style={{fontSize: '1rem', fontWeight: 'bold', color: '#00d4ff', fontFamily: 'monospace', textShadow: '0 0 10px rgba(0,212,255,0.3)'}}>{utcTime}</span>
+                <span style={{fontSize: '0.95rem', fontWeight: 'bold', color: '#00d4ff', fontFamily: 'monospace', textShadow: '0 0 10px rgba(0,212,255,0.3)'}}>{utcTime}</span>
             </div>
         </div>
     );
@@ -542,7 +542,7 @@ function App() {
   }, [scanSignals, prevScanLength]);
 
   return (
-    <div className="container" style={{padding: '2rem', maxWidth: '1400px', margin: '0 auto'}}>
+    <div className="container app-container">
       
       {/* Toast Notifications */}
       <div style={{position: 'fixed', top: '20px', right: '20px', zIndex: 10000, display: 'flex', flexDirection: 'column', gap: '10px'}}>
@@ -556,8 +556,8 @@ function App() {
 
       {/* Custom Confirm Modal */}
       {confirmDialog.isOpen && (
-          <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 10001, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)'}}>
-              <div className="glass-card" style={{width: '350px', border: '1px solid #ff4d4d', display: 'flex', flexDirection: 'column', gap: '20px'}}>
+          <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 10001, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)', padding: '10px'}}>
+              <div className="glass-card confirm-modal-box" style={{border: '1px solid #ff4d4d', display: 'flex', flexDirection: 'column', gap: '20px'}}>
                   <div style={{display: 'flex', alignItems: 'center', gap: '15px', color: 'white', fontSize: '1.1rem'}}>
                       <Shield color="#ff4d4d" size={28} />
                       <span style={{fontWeight: 'bold'}}>{confirmDialog.message}</span>
@@ -582,10 +582,10 @@ function App() {
 
       {/* Advanced Signal Details Panel (Locked on Screen) */}
       {selectedSignal && (
-          <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)'}}>
-              <div className="glass-card" style={{width: '600px', maxHeight: '90vh', overflowY: 'auto', border: `1px solid ${(selectedSignal.type || selectedSignal.signal) === 'LONG' || (selectedSignal.type || selectedSignal.signal) === 'BUY' ? '#00ffaa' : '#ff4d4d'}`}}>
+          <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)', padding: '10px'}}>
+              <div className="glass-card modal-box" style={{border: `1px solid ${(selectedSignal.type || selectedSignal.signal) === 'LONG' || (selectedSignal.type || selectedSignal.signal) === 'BUY' ? '#00ffaa' : '#ff4d4d'}`}}>
                   <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
-                      <h2 style={{color: 'white', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.5rem'}}>
+                      <h2 style={{color: 'white', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.4rem'}}>
                           <Activity size={24} color={(selectedSignal.type || selectedSignal.signal) === 'LONG' || (selectedSignal.type || selectedSignal.signal) === 'BUY' ? '#00ffaa' : '#ff4d4d'} />
                           {selectedSignal.symbol}
                       </h2>
@@ -597,7 +597,7 @@ function App() {
                           display: 'inline-block',
                           padding: '5px 20px', 
                           borderRadius: '10px', 
-                          fontSize: '1.2rem', 
+                          fontSize: '1.1rem', 
                           fontWeight: 'bold', 
                           background: (selectedSignal.type || selectedSignal.signal) === 'LONG' || (selectedSignal.type || selectedSignal.signal) === 'BUY' ? 'rgba(0, 255, 170, 0.2)' : 'rgba(255, 77, 77, 0.2)',
                           color: (selectedSignal.type || selectedSignal.signal) === 'LONG' || (selectedSignal.type || selectedSignal.signal) === 'BUY' ? '#00ffaa' : '#ff4d4d'
@@ -606,7 +606,7 @@ function App() {
                       </div>
                   </div>
 
-                  <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '1.5rem'}}>
+                  <div className="modal-grid">
                       <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                           <div style={{display: 'flex', justifyContent: 'space-between', background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '8px'}}>
                               <span style={{color: '#94a3b8', fontSize: '0.9rem'}}>Entry Price</span>
@@ -693,34 +693,35 @@ function App() {
       )}
 
       {/* Header */}
-      <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', gap: '10px'}}>
-        <div style={{flexShrink: 0}}>
-          <h1 className="text-gradient" style={{fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px', margin: 0, whiteSpace: 'nowrap'}}>
-            <Cpu size={32} color="#00ffaa" /> TaizerCodeCrafter AI BOT
+      <header className="app-header">
+        <div className="app-title-area">
+          <h1 className="text-gradient app-title">
+            <Cpu size={28} color="#00ffaa" /> TaizerCodeCrafter AI BOT
           </h1>
-          <p style={{color: '#94a3b8', margin: 0, marginTop: '5px', fontSize: '0.9rem'}}>Autonomous Trading Intelligence v1.0</p>
+          <p style={{color: '#94a3b8', margin: 0, marginTop: '4px', fontSize: '0.85rem'}}>Autonomous Trading Intelligence v1.0</p>
         </div>
         
         <DigitalClock />
 
-        <div style={{display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end'}}>
+        <div className="app-controls">
           <button 
             onClick={toggleAutoTrade}
             style={{
                 background: autoTrade ? 'rgba(0, 255, 170, 0.1)' : 'rgba(255, 255, 255, 0.05)', 
                 border: autoTrade ? '1px solid #00ffaa' : '1px solid rgba(255, 255, 255, 0.1)', 
-                padding: '10px 20px', 
+                padding: '10px 16px', 
                 color: autoTrade ? '#00ffaa' : 'white', 
                 borderRadius: '10px', 
                 fontWeight: 'bold',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontSize: '0.85rem'
             }}
           >
             {autoTrade ? 'AUTO-TRADE: ON' : 'AUTO-TRADE: OFF'}
           </button>
 
           {/* Searchable Coin Selector */}
-          <div style={{position: 'relative'}}>
+          <div style={{position: 'relative', minWidth: '130px'}}>
             <input 
                 type="text" 
                 placeholder="Search Coin..." 
@@ -733,7 +734,9 @@ function App() {
                     padding: '10px', 
                     color: 'white', 
                     borderRadius: '10px',
-                    width: '150px'
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    fontSize: '0.85rem'
                 }}
             />
             {showSearch && search && (
@@ -755,7 +758,7 @@ function App() {
                         <div 
                             key={c} 
                             onClick={() => { handleCoinChange(c); setSearch(''); setShowSearch(false); }}
-                            style={{padding: '10px', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)', hover: {background: 'rgba(255,255,255,0.05)'}}}
+                            style={{padding: '10px', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)'}}
                             onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
                             onMouseOut={(e) => e.target.style.background = 'transparent'}
                         >
@@ -769,26 +772,26 @@ function App() {
           <select 
             value={selectedTimeframe} 
             onChange={(e) => handleTimeframeChange(e.target.value)}
-            style={{background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', color: 'white', borderRadius: '10px', cursor: 'pointer'}}
+            style={{background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', color: 'white', borderRadius: '10px', cursor: 'pointer', fontSize: '0.85rem'}}
           >
             {timeframes.map(t => <option key={t} value={t} style={{background: '#07080a'}}>{t}</option>)}
           </select>
-          <div className="glass-card" style={{padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '10px'}}>
+          <div className="glass-card" style={{padding: '8px 14px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center'}}>
             <div className="pulse"></div>
-            <span style={{fontWeight: 'bold'}}>Bot: Running</span>
+            <span style={{fontWeight: 'bold', fontSize: '0.85rem'}}>Bot: Running</span>
           </div>
           <button 
             onClick={() => setSoundEnabled(!soundEnabled)}
             style={{background: soundEnabled ? 'rgba(0, 255, 170, 0.1)' : 'rgba(255, 77, 77, 0.1)', border: soundEnabled ? '1px solid rgba(0, 255, 170, 0.3)' : '1px solid rgba(255, 77, 77, 0.3)', padding: '10px', color: soundEnabled ? '#00ffaa' : '#ff4d4d', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
             title={soundEnabled ? "Mute Sound" : "Unmute Sound"}
           >
-            {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+            {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
           </button>
           <button 
             onClick={() => setShowSettingsUI(!showSettingsUI)}
             style={{background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', color: 'white', borderRadius: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
           >
-            <Settings size={20} />
+            <Settings size={18} />
           </button>
         </div>
       </header>
@@ -818,7 +821,7 @@ function App() {
           </div>
       )}
 
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem'}}>
+      <div className="stat-cards-grid">
         <StatCard icon={<DollarSign color="#ffd700" />} label="Portfolio" value={`$${balance.toFixed(2)}`} sub="USDT" />
         <StatCard icon={<DollarSign color="#00d4ff" />} label="Price" value={`$${price}`} sub="USDT" />
         <StatCard icon={<TrendingUp color="#00ffaa" />} label="F&G Index" value={fng.value} sub={fng.label} />
@@ -832,20 +835,22 @@ function App() {
           <h3 style={{display: 'flex', alignItems: 'center', gap: '10px', margin: 0}}>
             <Star size={20} color="#ffd700" fill="#ffd700" /> Favorite Coins
           </h3>
-          <div style={{position: 'relative'}}>
+          <div style={{position: 'relative', width: '100%', maxWidth: '280px'}}>
              <input 
                  type="text" 
                  placeholder="Search & Add to favorites..." 
                  value={favSearch}
                  onChange={(e) => { setFavSearch(e.target.value); setShowFavSearch(true); }}
                  onFocus={() => setShowFavSearch(true)}
+                 className="fav-search-box"
                  style={{
                      background: 'rgba(255,255,255,0.05)', 
                      border: '1px solid rgba(255,255,255,0.1)', 
                      padding: '10px 15px', 
                      color: 'white', 
                      borderRadius: '10px',
-                     width: '250px'
+                     width: '100%',
+                     boxSizing: 'border-box'
                  }}
              />
              {showFavSearch && favSearch && (
@@ -962,7 +967,7 @@ function App() {
       </div>
 
       {/* Row 1: Chart & History */}
-      <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem', marginBottom: '2rem'}}>
+      <div className="chart-row-grid">
         <div className="glass-card" style={{minHeight: '450px'}}>
           <h3 style={{marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px'}}>
             <Activity size={20} color="#00d4ff" /> {selectedCoin} Live Advanced Chart
@@ -1023,7 +1028,7 @@ function App() {
       </div>
 
       {/* Row 2: Indicators, Calculator & Info */}
-      <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1.5fr', gap: '1.5rem', marginBottom: '2rem'}}>
+      <div className="indicators-row-grid">
         {/* RSI Gauge */}
         <div className="glass-card" style={{display: 'flex', flexDirection: 'column'}}>
             <h3 style={{marginBottom: '1rem', display: 'flex', justifyContent: 'space-between'}}>
@@ -1110,14 +1115,14 @@ function App() {
         </div>
 
         {/* Info Card - Market Intelligence */}
-        <div className="glass-card" style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gridColumn: 'span 2'}}>
-            <h3 style={{marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <div className="glass-card span-2-col" style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
+            <h3 style={{marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px'}}>
                 <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><Shield size={20} color="#00ffaa" /> Market Intelligence & Live Pattern Tracking</div>
                 <span style={{color: '#00d4ff', fontSize: '0.9rem'}}>{selectedCoin} | {selectedTimeframe}</span>
             </h3>
             <div style={{display: 'flex', gap: '20px', flexWrap: 'wrap'}}>
                 {/* Left Side: Stats and Alerts */}
-                <div style={{display: 'flex', flexDirection: 'column', gap: '10px', flex: 1, minWidth: '300px'}}>
+                <div style={{display: 'flex', flexDirection: 'column', gap: '10px', flex: 1, minWidth: '260px'}}>
                     <div style={{display: 'flex', gap: '10px'}}>
                         <div style={{flex: 1, padding: '10px', background: 'rgba(0, 255, 170, 0.05)', borderRadius: '10px', border: '1px solid rgba(0, 255, 170, 0.1)'}}>
                             <div style={{fontSize: '0.7rem', color: '#94a3b8'}}>Detected Pattern</div>
@@ -1342,7 +1347,7 @@ function App() {
         </div>
 
         {/* Info Card - Signal History */}
-        <div className="glass-card" style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gridColumn: 'span 2'}}>
+        <div className="glass-card span-2-col" style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
             {(() => {
                 const filteredHistory = signalHistory.filter(h => {
                     if (historyFilter === 'ALL') return h?.status === 'PROFIT' || h?.status?.includes('LOSS');
@@ -1352,20 +1357,20 @@ function App() {
                 });
                 return (
                     <>
-                        <h3 style={{marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                        <h3 className="card-header-responsive">
+                            <div style={{display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap'}}>
                                 <History size={20} color="#00d4ff" /> 
-                                Signal & Trade Outcomes 
+                                <span>Signal & Trade Outcomes</span> 
                                 <span style={{fontSize: '0.8rem', background: 'rgba(0, 212, 255, 0.1)', color: '#00d4ff', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold'}}>
                                     {filteredHistory.length}
                                 </span>
                             </div>
-                            <div style={{display: 'flex', gap: '5px'}}>
-                                <button onClick={handleExportCSV} style={{background: 'rgba(0, 212, 255, 0.2)', color: '#00d4ff', border: '1px solid #00d4ff', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px'}}><Download size={12}/> EXPORT CSV</button>
-                                <button onClick={() => setHistoryFilter('ALL')} style={{background: historyFilter === 'ALL' ? 'rgba(255, 255, 255, 0.2)' : 'transparent', color: historyFilter === 'ALL' ? '#fff' : '#94a3b8', border: historyFilter === 'ALL' ? '1px solid #fff' : '1px solid transparent', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>ALL</button>
-                                <button onClick={() => setHistoryFilter('PROFIT')} style={{background: historyFilter === 'PROFIT' ? 'rgba(0, 255, 170, 0.2)' : 'transparent', color: historyFilter === 'PROFIT' ? '#00ffaa' : '#94a3b8', border: historyFilter === 'PROFIT' ? '1px solid #00ffaa' : '1px solid transparent', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>PROFIT</button>
-                                <button onClick={() => setHistoryFilter('LOSS')} style={{background: historyFilter === 'LOSS' ? 'rgba(255, 77, 77, 0.2)' : 'transparent', color: historyFilter === 'LOSS' ? '#ff4d4d' : '#94a3b8', border: historyFilter === 'LOSS' ? '1px solid #ff4d4d' : '1px solid transparent', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>LOSS</button>
-                                <button onClick={() => setHistoryFilter('PENDING')} style={{background: historyFilter === 'PENDING' ? 'rgba(251, 191, 36, 0.2)' : 'transparent', color: historyFilter === 'PENDING' ? '#fbbf24' : '#94a3b8', border: historyFilter === 'PENDING' ? '1px solid #fbbf24' : '1px solid transparent', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>PENDING</button>
+                            <div style={{display: 'flex', gap: '5px', flexWrap: 'wrap'}}>
+                                <button onClick={handleExportCSV} style={{background: 'rgba(0, 212, 255, 0.2)', color: '#00d4ff', border: '1px solid #00d4ff', padding: '3px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px'}}><Download size={12}/> EXPORT</button>
+                                <button onClick={() => setHistoryFilter('ALL')} style={{background: historyFilter === 'ALL' ? 'rgba(255, 255, 255, 0.2)' : 'transparent', color: historyFilter === 'ALL' ? '#fff' : '#94a3b8', border: historyFilter === 'ALL' ? '1px solid #fff' : '1px solid transparent', padding: '3px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>ALL</button>
+                                <button onClick={() => setHistoryFilter('PROFIT')} style={{background: historyFilter === 'PROFIT' ? 'rgba(0, 255, 170, 0.2)' : 'transparent', color: historyFilter === 'PROFIT' ? '#00ffaa' : '#94a3b8', border: historyFilter === 'PROFIT' ? '1px solid #00ffaa' : '1px solid transparent', padding: '3px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>PROFIT</button>
+                                <button onClick={() => setHistoryFilter('LOSS')} style={{background: historyFilter === 'LOSS' ? 'rgba(255, 77, 77, 0.2)' : 'transparent', color: historyFilter === 'LOSS' ? '#ff4d4d' : '#94a3b8', border: historyFilter === 'LOSS' ? '1px solid #ff4d4d' : '1px solid transparent', padding: '3px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>LOSS</button>
+                                <button onClick={() => setHistoryFilter('PENDING')} style={{background: historyFilter === 'PENDING' ? 'rgba(251, 191, 36, 0.2)' : 'transparent', color: historyFilter === 'PENDING' ? '#fbbf24' : '#94a3b8', border: historyFilter === 'PENDING' ? '1px solid #fbbf24' : '1px solid transparent', padding: '3px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer'}}>PENDING</button>
                             </div>
                         </h3>
                         
@@ -1430,7 +1435,7 @@ function App() {
 
       {/* Full Width Row: Live Market Pattern Visualization */}
       <div className="glass-card" style={{ marginBottom: '2rem' }}>
-          <h3 style={{marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+          <h3 style={{marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px'}}>
               <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}><Activity size={20} color="#00d4ff" /> Live Market Action & Pattern Formation (1000 Candles)</div>
               <span style={{color: '#00d4ff', fontSize: '0.9rem'}}>{selectedCoin} | {selectedTimeframe}</span>
           </h3>
@@ -1438,7 +1443,7 @@ function App() {
       </div>
 
       {/* Row 3: Calculator & Sentiment */}
-      <div style={{display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem', marginBottom: '2rem'}}>
+      <div className="trading-row-grid">
         <div className="glass-card">
           <h3 style={{marginBottom: '1rem'}}>Manual Trading Terminal</h3>
           <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
@@ -1508,14 +1513,14 @@ function App() {
       </div>
 
       {/* Advanced Pro Dashboard Features */}
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem'}}>
+      <div className="pro-row-grid">
         {/* 1. Top Gainers & Losers */}
         <div className="glass-card">
             <h3 style={{marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px'}}>
                 <TrendingUp size={20} color="#00ffaa" /> Top Movers (24h)
             </h3>
-            <div style={{display: 'flex', gap: '1rem'}}>
-                <div style={{flex: 1}}>
+            <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+                <div style={{flex: 1, minWidth: '120px'}}>
                     <h4 style={{color: '#00ffaa', fontSize: '0.8rem', marginBottom: '10px'}}>🚀 Top Gainers</h4>
                     {marketStats.gainers.map((c, i) => (
                         <div key={i} style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '5px'}}>
